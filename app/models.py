@@ -1,9 +1,7 @@
-from . import db
-from sqlalchemy.sql import func
+from . import db,login_manager
 from werkzeug.security import generate_password_hash,check_password_hash
-from flask_login import UserMixin, current_user
+from flask_login import UserMixin
 from datetime import datetime
-from . import login_manager
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -18,9 +16,9 @@ class User(UserMixin,db.Model):
     email = db.Column(db.String(255),unique = True,index = True)
     bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String())
-    blog = db.relationship('Blog', backref='user', lazy='dynamic')
+    # blog = db.relationship('Blog', backref='user', lazy='dynamic')
     pass_secure = db.Column(db.String(255))
-    comment = db.relationship('Comment', backref='user', lazy='dynamic')
+    # comment = db.relationship('Comment', backref='user', lazy='dynamic')
 
    
 
