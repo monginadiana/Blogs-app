@@ -1,0 +1,24 @@
+{% extends 'base.html'%} 
+{% import 'macros.html' as macro %}
+{%block content%}
+<div class="col-sm-12">
+    <div class="panel panel-default">
+        <div class="card">
+            <div class="panel-body" >
+            <blockquote class="blockquote mb-0 Panel-body">
+                <p>{{quote.quote}}</p>
+                <footer class="panel-footer">
+                    <cite title="Source Title" style="color: maroon;" >{{quote.author| capitalize}}</cite>
+                    
+                </footer>
+                
+              </blockquote>
+            </div>
+            
+
+    </div>
+    
+</div>
+
+{%endblock%}
+
