@@ -16,7 +16,7 @@ class User(UserMixin,db.Model):
     email = db.Column(db.String(255),unique = True,index = True)
     bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String())
-    # blog = db.relationship('Blog', backref='user', lazy='dynamic')
+    blog = db.relationship('Blog', backref='user', lazy='dynamic')
     pass_secure = db.Column(db.String(255))
     # comment = db.relationship('Comment', backref='user', lazy='dynamic')
 
@@ -44,3 +44,31 @@ class Quote:
     def __init__(self, author, quote):
         self.author = author
         self.quote = quote
+        
+class Blog(db.Model):
+    __tablename__ = 'blogs'
+    id = db.Column(db.Integer,primary_key=True)
+    title = db.Column(db.String(255),nullable=False)
+    content = db.Column(db.String())
+    posted_on = db.Column(db.DateTime,nullable=False,default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    
+    ##save blog
+    def save_blog(self):
+        db.session.add(self)
+        db.session.commit()
+
+    ##delete blog
+    def delete_blog(self):
+        db.session.delete(self)
+        db.session.commit()
+    
+    ## creation of a dynamic class
+    @classmethod
+    def get_blog(cls,id):
+        blog = Blog.query.filter_by(id=id).first()
+
+        return blog
+        
+    def __repr__(self):
+        return f"Blog ('{self.title}','{self.posted_on}')"
