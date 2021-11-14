@@ -1,45 +1,54 @@
 {% extends 'base.html'%} 
-{% import 'macros.html' as macro %}
+{% import 'macros.html' as macro %} 
+{% block styles%} 
+{{ super() }}
+<link rel="stylesheet" href="{{url_for('static',filename='css/index.css')}}" />
+{%endblock%}
 {%block content%}
-<div class="col-sm-12">
-    <div class="panel panel-default">
-        <div class="card">
-            <div class="panel-body" >
-            <blockquote class="blockquote mb-0 Panel-body">
-                <p>{{quote.quote}}</p>
-                <footer class="panel-footer">
-                    <cite title="Source Title" style="color: maroon;" >{{quote.author| capitalize}}</cite>
-                    
-                </footer>
-                
-              </blockquote>
-            </div>
-            
 
+<div class = "container">
+ 
+    <div class= "row">
+        <div class="col-sm-12 intro">
+            <div class="panel panel-default">
+                <div class="panel">
+                    <div class="panel-body">
+                        <blockquote class="blockquote mb-0 Panel-body">
+                        <h3>blessing</h3>
+                        <p>{{quote.quote}}</p>
+                        <footer class="panel-footer">
+                        <cite title="Source Title" style="color: maroon"
+                             >{{quote.author| capitalize}}</cite>
+                        </footer>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
+{% for blog in blogs %}
+<div class="col-md-3">
+  <div class="text-centre">
+    <div
+      class="card text-white bg-info mb-3"
+      style="max-width: 30rem; margin: 1vw; padding: 1vw"
+    >
+      <h4 class="card-header">Blog Title :{{blog.title}}</h4>
+      <div class="card-body">
+        <p class="card-title">Blog Category: {{blog.category}}</p>
 
-{% for blog in blogs %} 
-    <div class="col-md-3 ">
-        <div class="text-centre">
-            <div class="card text-white bg-info mb-3" style="max-width: 30rem; margin:1vw; padding:1vw;">
-                <h4 class="card-header">Blog Title :{{blog.title}}</h4>
-                <div class="card-body">
-
-                <p class="card-title"> Blog Category: {{blog.category}}</p>
-
-                <p class="card-text">Blog Description: {{blog.content}}</p>
-                <p class="card-text">Blogger: {{blog.created_by}}</p>
-
-                        
-         
-            </div>
+        <p class="card-text">Blog Description: {{blog.content}}</p>
+        <p class="card-text">Blogger: {{blog.created_by}}</p>
+        <div class="col-md-6"><p><i class="fa fa-clock" aria-hidden="true"></i> {{blog.date_posted.strftime('%Y-%m-%d')}}</p></div>
+        <button><a href="{{ url_for('main.delete_blog',id=blog.id)}}" class="text-danger" title="Delete Post"><small><iclass="fa fa-trash"></i></small>Delete</a></button>
         </div>
-        </div>
+      </div>
     </div>
-    
-{% endfor %}
-{%endblock%}
+  </div>
+</div>
+</div>
 
+{% endfor %} 
+{%endblock%}

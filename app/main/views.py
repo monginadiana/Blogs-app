@@ -23,6 +23,16 @@ def index():
     all_blogs = Blog.query.order_by(Blog.date_posted).all()
     return render_template('index.html',quote =quote,blogs = all_blogs)
 
+@main.route('/quotes')
+def quotes():
+
+    '''
+    '''
+    quote = get_quote()
+    title = 'Blogger | Quotes'
+    
+    return render_template('quotes.html', title = title,quote = quote)
+
 @main.route('/blog', methods=['GET', 'POST'])
 @login_required
 def new_blog():
@@ -32,7 +42,7 @@ def new_blog():
         category = blog_form.category.data
         content = blog_form.content.data
         created_by = blog_form.created_by.data
-        new_blog = Blog(title=title,user=current_user,category=category, content=content, created_by= created_by)
+        new_blog = Blog(title=title,category=category, content=content, created_by= created_by)
         new_blog.save_blog()
         db.session.add(new_blog)
         db.session.commit()
@@ -76,3 +86,15 @@ def update_pic(uname):
         user.profile_pic_path = path
         db.session.commit()
     return redirect(url_for('main.profile', uname=uname))
+
+@main.route('/blog/<int:id>/delete', methods=['GET', 'POST'])
+@login_required
+def delete_blog(id):
+    """
+        View delete post function that returns the delete post page and its data
+    """
+    blog = Blog.query.get_or_404(id)
+    db.session.delete(blog)
+    db.session.commit()
+    flash('You have successfully deleted the post', 'success')
+    return redirect(url_for('main.index'))

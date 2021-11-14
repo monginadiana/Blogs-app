@@ -9,6 +9,7 @@ class BlogForm(FlaskForm):
     created_by= StringField('Blog author',validators=[Required()])
     submit = SubmitField('Submit')
     
+
 class UpdateProfile(FlaskForm):
     bio = TextAreaField('Tell Us About Yourself...',validators = [Required()])
     submit = SubmitField('Submit')
@@ -19,3 +20,4 @@ class UpdateProfileForm(FlaskForm):
     email = StringField('Email', validators=[Required(), Length(1, 64), Email()])
     bio = TextAreaField('About...', validators=[Required(), Length(1, 100)])
     submit = SubmitField('Submit')
+    
