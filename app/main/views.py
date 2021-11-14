@@ -42,7 +42,7 @@ def new_blog():
         category = blog_form.category.data
         content = blog_form.content.data
         created_by = blog_form.created_by.data
-        new_blog = Blog(title=title,category=category, content=content, created_by= created_by)
+        new_blog = Blog(title=title,user=current_user,category=category, content=content, created_by= created_by)
         new_blog.save_blog()
         db.session.add(new_blog)
         db.session.commit()
