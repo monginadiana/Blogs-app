@@ -34,7 +34,7 @@ class ProdConfig(Config):
 
 
 class DevConfig(Config):
-    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://access:diana@localhost/redmi'
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://access:diana@localhost/boys'
     DEBUG = True
 
 

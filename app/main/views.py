@@ -1,12 +1,12 @@
 from flask import render_template,request,redirect,url_for,abort,flash
 from . import main
-from ..models import User, Quote, Blog
+from ..models import User, Quote, Blog,Comment
 from flask_login import login_required,current_user
 
 
 from .. import db,photos
 from ..requests import get_quote
-from .forms import BlogForm,UpdateProfile
+from .forms import BlogForm,UpdateProfile, CommentForm
 from flask.views import View,MethodView
 
 
@@ -86,6 +86,40 @@ def update_pic(uname):
         user.profile_pic_path = path
         db.session.commit()
     return redirect(url_for('main.profile', uname=uname))
+
+
+@main.route('/comment', methods=['GET', 'POST'])
+@login_required
+def add_comment():
+    form = CommentForm()
+    if form.validate_on_submit():
+        comment = Comment(name=form.name.data)
+        db.session.add(comment)
+        db.session.commit()
+        flash('Comment added successfully.')
+        return redirect(url_for('.index'))
+    return render_template('comments.html', form=form)
+
+@main.route('/blog/<id>', methods=['GET', 'POST'])
+@login_required
+def blog_details(id):
+    comments = Comment.query.filter_by(blog_id=id).all()
+    blogs = Blog.query.get(id)
+    if blogs is None:
+        abort(404)
+    form = CommentForm()
+    if form.validate_on_submit():
+        comment = Comment(
+            comment=form.comment.data,
+            blog_id=id,
+            user_id=current_user.id
+        )
+        db.session.add(comment)
+        db.session.commit()
+        form.comment.data = ''
+        flash('Your comment has been posted successfully!')
+    return render_template('comment.html', blog=blogs, comment=comments, comment_form=form)
+
 
 @main.route('/blog/<int:id>/delete', methods=['GET', 'POST'])
 @login_required

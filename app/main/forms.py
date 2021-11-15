@@ -20,4 +20,9 @@ class UpdateProfileForm(FlaskForm):
     email = StringField('Email', validators=[Required(), Length(1, 64), Email()])
     bio = TextAreaField('About...', validators=[Required(), Length(1, 100)])
     submit = SubmitField('Submit')
+
+class CommentForm(FlaskForm):
+
+    comment = TextAreaField('Add a comment',validators = [Required()] )
+    submit = SubmitField('Submit')
     

@@ -11,10 +11,11 @@
     <div class= "row">
         <div class="col-sm-12 intro">
             <div class="panel panel-default">
-                <div class="panel">
+                <div class="panel-header text-center">
+                <h3 style="color:maroon; font-weight:bold;">Lets Read Blogs</h3>
                     <div class="panel-body">
                         <blockquote class="blockquote mb-0 Panel-body">
-                        <h3>blessing</h3>
+                        
                         <p>{{quote.quote}}</p>
                         <footer class="panel-footer">
                         <cite title="Source Title" style="color: maroon"
@@ -40,6 +41,7 @@
                 <p class="card-text">Blogger: {{blog.created_by}}</p>
                 <div class="col-md-6"><p><i class="fa fa-clock" aria-hidden="true"></i> {{blog.date_posted.strftime('%Y-%m-%d')}}</p></div>
                 <button><a href="{{ url_for('main.delete_blog',id=blog.id)}}" class="text-danger" title="Delete Post"><small><iclass="fa fa-trash"></i></small>Delete</a></button>
+                <a href="{{ url_for('main.blog_details', id = blog.id)}}"><button class="btn-success">Add a comment</button></a>
 
                         
          
