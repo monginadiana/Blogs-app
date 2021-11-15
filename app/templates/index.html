@@ -32,26 +32,26 @@ integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg
     </div>
 </div>
 {% for blog in blogs %} 
-    <div class="col-md-3 ">
+    <div class="col-md-6 ">
         <div class="text-centre">
-            <div class="card text-white bg-info mb-3" style="max-width: 30rem; margin:1vw; padding:1vw;">
+            <div class ="card text-white bg-info text-center" style ="padding:10px;">
                 <h4 class="card-header">Blog Title :{{blog.title}}</h4>
                 <div class="card-body">
 
-                <p class="card-title"> Blog Category: {{blog.category}}</p>
+                    <p class="card-title"> Blog Category: {{blog.category}}</p>
 
-                <p class="card-text">Blog Description: {{blog.content}}</p>
-                <p class="card-text">Blogger: {{blog.created_by}}</p>
-                <p class="card-text">Date Posted: {{blog.date_posted.strftime('%Y-%m-%d')}}</p>
+                    <p class="card-text">Blog Description: {{blog.content}}</p>
+                    <p class="card-text">Blogger: {{blog.created_by}}</p>
+                    <p class="card-text">Date Posted: {{blog.date_posted.strftime('%Y-%m-%d')}}</p>
 
-                <a href="{{ url_for('main.delete_blog',id=blog.id)}}"><button class="btn-success">Delete</button></a><br><br>
-                <a href="{{ url_for('main.blog_details', id=blog.id)}}"><button class="btn-success">Add a comment</button></a><br><br>
-                <a href="{{ url_for('main.edit_blog', blog_id=blog.id)}}"><button class="btn-success">Update comment</button></a>
+                    <a href="{{ url_for('main.delete_blog',id=blog.id)}}"><button class="btn-success">Delete</button></a><br><br>
+                    <a href="{{ url_for('main.blog_details', id=blog.id)}}"><button class="btn-success">Add a comment</button></a><br><br>
+                    <a href="{{ url_for('main.edit_blog', blog_id=blog.id)}}"><button class="btn-success">Update comment</button></a>
                 
                         
          
+                </div>
             </div>
-        </div>
         </div>
     </div>
     
