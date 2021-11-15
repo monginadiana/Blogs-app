@@ -6,7 +6,7 @@ from flask_login import login_required,current_user
 
 from .. import db,photos
 from ..requests import get_quote
-from .forms import BlogForm,UpdateProfile, CommentForm
+from .forms import BlogForm,UpdateProfile, CommentForm,UpdateBlog
 from flask.views import View,MethodView
 
 
@@ -119,6 +119,18 @@ def blog_details(id):
         form.comment.data = ''
         flash('Your comment has been posted successfully!')
     return render_template('comment.html', blog=blogs, comment=comments, comment_form=form)
+
+@main.route('/updateblog/<int:blog_id>', methods=["GET", "POST"])
+def edit_blog(blog_id):
+    form = UpdateBlog()
+    if form.validate_on_submit():
+        updates = form.updates.data
+        blog = Blog.query.filter_by(id = blog_id).updates({"updates":updates})
+        db.session.commit()
+        return redirect(url_for("main.profile", uname = current_user.username))
+    else:
+        form.updates.data = Blog.query.filter_by(id = blog_id).first()
+    return render_template("update-blog.html",updateblog_form = form)
 
 
 @main.route('/blog/<int:id>/delete', methods=['GET', 'POST'])

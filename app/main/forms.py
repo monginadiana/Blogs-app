@@ -30,3 +30,7 @@ class SubscriberForm(FlaskForm):
     email = StringField('Email', validators=[Required(), Length(1, 64), Email()])
     submit = SubmitField('Subscribe')
     
+class UpdateBlog(FlaskForm):
+    updates = TextAreaField('update your blog',validators=[Required()])
+    submit = SubmitField('submit')
+    
