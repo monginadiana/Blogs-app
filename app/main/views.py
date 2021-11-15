@@ -145,6 +145,22 @@ def delete_blog(id):
     flash('You have successfully deleted the post', 'success')
     return redirect(url_for('main.index'))
 
+# delete comment
+@main.route('/comment/<int:id>/delete', methods=['GET', 'POST'])
+@login_required
+def delete_comment(id):
+    """
+        View delete comment function that returns the delete comment page and its data
+    """
+    comment = Comment.query.filter_by(id=id).first()
+    db.session.delete(comment)
+    db.session.commit()
+   
+    
+  
+    flash('You have successfully deleted the comment', 'success')
+    return redirect(url_for('main.profile', uname=current_user.username))
+
 @main.route('/subscribe', methods=['GET', 'POST'])
 def subscribe():
     """
