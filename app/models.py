@@ -99,14 +99,20 @@ class Comment(db.Model):
 
         return author
     
-class Subscribers(db.Model):
-    __tablename__ = "subscribers"
-    id = db.Column(db.Integer, primary_key = True)
-    email = db.Column(db.String(255), unique = True, index = True)
+class Subscriber(db.Model):
+    __tablename__ = 'subscribers'
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(255), unique=True, index=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     def save_subscriber(self):
         db.session.add(self)
         db.session.commit()
+
+    @classmethod
+    def get_subscribers(cls):
+        subscribers = Subscriber.query.all()
+        return subscribers
 
     def __repr__(self):
         return f'Subscriber {self.email}'
