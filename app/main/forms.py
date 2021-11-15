@@ -25,4 +25,8 @@ class CommentForm(FlaskForm):
 
     comment = TextAreaField('Add a comment',validators = [Required()] )
     submit = SubmitField('Submit')
+
+class SubscriberForm(FlaskForm):
+    email = StringField('Email', validators=[Required(), Length(1, 64), Email()])
+    submit = SubmitField('Subscribe')
     
